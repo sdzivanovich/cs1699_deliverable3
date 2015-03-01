@@ -1,0 +1,5 @@
+Feature: 
+As a user (with or without an account)
+I want to search for and view articles
+So that I may increase my knowledge 
+

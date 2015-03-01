@@ -1,0 +1,5 @@
+Feature:
+As a user
+I want be able to create and use an account
+So that I may communicate with other Wikipedia users
+
