@@ -1,5 +1,33 @@
 Feature: 
 As a user (with or without an account)
-I want to search for and view articles
+I want to search for and/or view articles
 So that I may increase my knowledge 
 
+Scenario: Searching for specific article
+Given the user is on the main page
+And the name of an article
+When the user searches for the name of the article
+Then the user should be taken to the article's page
+
+Scenario: Searching non-specific article
+Given the user is on the main page
+And a phrase that is not the name of an article
+When the user searches for the phrase
+Then the user should see that an article for the phrase does not exist
+And the user should see search results for the phrase
+
+Scenario: Navigating to non-existent article
+Given a phrase that is not the name of an article
+When the user attempts to navigate directly to this article
+Then the user should see that the article does not exist
+
+Scenario: Viewing random article
+Given the user is on the main page
+When the user clicks the "Random article" link
+Then the user should be taken to an article
+
+Scenario: Viewing categories of articles
+Given the user is on the main page
+And the name of a category
+When the user searches for the category
+Then the user should see the page for the category
