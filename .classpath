@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="lib/selenium-2.45.0/libs/apache-mime4j-0.6.jar"/>
 	<classpathentry kind="lib" path="lib/selenium-2.45.0/libs/cglib-nodep-2.1_3.jar"/>
 	<classpathentry kind="lib" path="lib/selenium-2.45.0/libs/commons-codec-1.9.jar"/>
