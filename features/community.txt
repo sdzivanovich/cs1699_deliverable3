@@ -1,0 +1,10 @@
+Feature:
+As a user (with or without an account)
+I want to interact with others and view helpful content
+so that I can have a much easier time navigating Wikipedia
+
+Scenario:
+Scenario:
+Scenario:
+Scenario:
+Scenario:
