@@ -11,10 +11,10 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 /* Feature: 
  * As a user (with or without an account)
- * I want to search for and/or view articles
+ * I want to search for and find articles
  * So that I may increase my knowledge
  */ 
-public class SearchAndViewArticlesTests
+public class SearchingArticlesTests
 {
     private WebDriver _driver;    
 
@@ -33,7 +33,7 @@ public class SearchAndViewArticlesTests
 
     @Test
     // Scenario: Searching for an existing article
-    public void searchForExistingArticle() 
+    public void searchingForExistingArticle() 
     {       
         // Given the user is on the main page
         // And the name of an article
@@ -50,7 +50,7 @@ public class SearchAndViewArticlesTests
 
     @Test
     //Scenario: Searching non-existent article
-    public void searchForNonExistentArticle()
+    public void searchingForNonExistentArticle()
     {
         // Given the user is on the main page
         _driver.get("https://en.wikipedia.org/wiki/Main_Page");
@@ -69,7 +69,7 @@ public class SearchAndViewArticlesTests
 
     @Test
     //Scenario: Viewing categories of articles
-    public void searchForCategory()
+    public void searchingForCategory()
     {
         // Given the user is on the main page
         _driver.get("https://en.wikipedia.org/wiki/Main_Page");
@@ -88,17 +88,17 @@ public class SearchAndViewArticlesTests
 
     @Test
     //Scenario: Viewing categories of articles
-    public void linksToOtherArticlesWithinArticle()
+    public void linkingToOtherArticlesWithinArticle()
     {
         // Given the user is on an article page
         _driver.get("https://en.wikipedia.org/wiki/Cat");
         // And the article pages contains links to other Wikipedia articles
         String link = "mammal";
         assertTrue(isElementPresent(By.linkText(link)));
-        // When the user searches for the category
+        // When the user clicks on a link within the article
         _driver.findElement(By.linkText(link)).click();
         // Then the user should be taken to the page for the clicked-on article
-        assertEquals("https://en.wikipedia.org/wiki/Mammal", _driver.getCurrentUrl());        
+        assertEquals("https://en.wikipedia.org/wiki/Mammal", _driver.getCurrentUrl());
     }
     
     @Test

@@ -1,0 +1,37 @@
+Feature:
+As a user with an account
+I want users to have user pages
+So that I may interact with other Wikipedia users
+
+Scenario: Viewing user page
+Given the name of a user on Wikipedia
+And the user is on the main page
+When the user searches for the user name
+Then the user should see the user page for that user
+
+Scenario: Editing user page
+Given a logged in user
+And the user is on their user page
+And their user page has some content
+When the user edits their user page
+Then the content on their user page should be updated
+
+Scenario: Viewing user contributions
+Given the user is on a user's user page
+When the user clicks on the User contributions link
+Then the user should see the contributions made by this user
+
+Scenario: Posting message to another user
+Given the user is logged in
+And the name of another user
+When a user navigates to the other user's page
+And clicks on the Talk link
+And clicks on the Edit link
+Then the user should be able to modify the talk page
+
+Scenario: Viewing user page history
+Given the name of a user
+When the user navigates to the user's user page
+And clicks on the View history link
+Then the user should see the user's user page revisions
+

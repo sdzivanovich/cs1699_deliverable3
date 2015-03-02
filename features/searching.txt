@@ -1,6 +1,6 @@
 Feature: 
 As a user (with or without an account)
-I want to search for and/or view articles
+I want to search for and find articles
 So that I may increase my knowledge 
 
 Scenario: Searching for an existing article
@@ -9,7 +9,7 @@ And the name of an article
 When the user searches for the name of the article
 Then the user should be taken to the article's page
 
-Scenario: Searching non-existent article
+Scenario: Searching for non-existent article
 Given the user is on the main page
 And a phrase that is not the name of an article
 When the user searches for the phrase
