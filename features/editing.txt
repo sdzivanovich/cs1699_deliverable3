@@ -3,8 +3,32 @@ As a user (with or without an account)
 I want to review and edit articles
 so that I can update the contents of an article with new or more-correct information
 
-Scenario:
-Scenario:
-Scenario:
-Scenario:
-Scenario:
+Scenario: Semi-Protected page
+Given an existing Semi-Protected page 
+And a user that is not logged in
+When the user attempts to edit the page
+Then the user should see "This page is currently semi-protected so that only established registered users can edit it."
+
+Scenario: Non-Protected page
+Given an existing Non-Protected page
+And a user that is not logged in
+When the user attempts to edit the page
+Then the user should see a "Save page" button so that they may save their changes
+
+Scenario: Preview Change
+Given an existing page
+And a user that is not logged in
+When the user edits the page
+Then the user should be able to "Show preview" in order to preview their changes
+
+Scenario: View History
+Given an existing page
+And a user that is not logged in
+When the user navigates to the page
+Then the user should be able to see the edit history for that particular page
+
+Scenario: Disambiguation Edit
+Given a generic item to search for
+And a disambiguation page for the item
+When teh user navigates to the disambiguation page
+Then the user should be able to edit that page
