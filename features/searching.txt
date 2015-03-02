@@ -18,7 +18,7 @@ And the user should see search results for the phrase
 
 Scenario: Linking to other articles within article
 Given the user is on an article page
-And the article pages contains links to other wikipedia articles
+And the article page contains links to other wikipedia articles
 When the user clicks on a link within the article
 Then the user should be taken to the page for the clicked-on article
 

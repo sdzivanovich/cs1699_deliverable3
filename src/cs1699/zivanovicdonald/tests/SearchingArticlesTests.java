@@ -3,6 +3,7 @@ package cs1699.zivanovicdonald.tests;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.*;
@@ -55,14 +56,15 @@ public class SearchingArticlesTests
         // Given the user is on the main page
         _driver.get("https://en.wikipedia.org/wiki/Main_Page");
         // And a phrase that is not the name of an article
-        String target = "rent a cat";
+        String target = "Rent a cat";
         // When the user searches for the phrase
         _driver.findElement(By.id("searchInput")).click();
         _driver.findElement(By.id("searchInput")).clear();
         _driver.findElement(By.id("searchInput")).sendKeys(target);
         _driver.findElement(By.id("searchButton")).click();
         // Then the user should see that an article for the phrase does not exist
-        assertThat(_driver.findElement(By.cssSelector("i")).getText(),containsString("The page \"Rent a cat\" does not exist."));
+        String targetMessage = "The page \"" + target + "\" does not exist.";
+        assertThat(_driver.findElement(By.cssSelector("i")).getText(), containsString(targetMessage));
         //And the user should see search results for the phrase        
         assertEquals("Search results", _driver.findElement(By.id("firstHeading")).getText());
     }
@@ -83,7 +85,13 @@ public class SearchingArticlesTests
         // Then the user should see the page for the category   
         assertEquals(category, _driver.findElement(By.id("firstHeading")).getText());
         // And the user should see links to pages in the category
-        assertEquals("Atheism and religion", _driver.findElement(By.linkText("Atheism and religion")).getText());
+        assertTrue(isElementPresent(By.id("mw-pages")));        
+        List<WebElement> links = _driver.findElements(By.cssSelector("#mw-pages .mw-content-ltr a"));
+        assertFalse(links.isEmpty());
+        
+        // (make sure linked page is actually in category)
+        links.get(0).click();
+        assertTrue(isElementPresent(By.cssSelector("a[title=\"" + category + "\"]")));
     }
 
     @Test
@@ -92,13 +100,16 @@ public class SearchingArticlesTests
     {
         // Given the user is on an article page
         _driver.get("https://en.wikipedia.org/wiki/Cat");
-        // And the article pages contains links to other Wikipedia articles
-        String link = "mammal";
-        assertTrue(isElementPresent(By.linkText(link)));
+        // And the article page contains links to other Wikipedia articles
+        List<WebElement> links = _driver.findElements(By.cssSelector("#mw-content-text > p > a"));
+        assertFalse(links.isEmpty());
         // When the user clicks on a link within the article
-        _driver.findElement(By.linkText(link)).click();
+        WebElement link = links.get(0);
+        String name = link.getAttribute("title");
+        link.click();
+                
         // Then the user should be taken to the page for the clicked-on article
-        assertEquals("https://en.wikipedia.org/wiki/Mammal", _driver.getCurrentUrl());
+        assertEquals("https://en.wikipedia.org/wiki/" + name, _driver.getCurrentUrl());
     }
     
     @Test
