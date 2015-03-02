@@ -50,7 +50,7 @@ public class UserPageTests
     public void viewingUserPage() 
     {
         // Given the name of a user on Wikipedia
-        String name = "Cs1699_test1";
+        String name = "Mansfieldatron";
         // And the user is on the main page
         _driver.get("https://en.wikipedia.org/wiki/Main_Page");
         // When the user searches for the user name
@@ -59,7 +59,7 @@ public class UserPageTests
         _driver.findElement(By.id("searchButton")).click();
         // Then the user should see the user page for that user 
         assertEquals("https://en.wikipedia.org/wiki/User:" + name, _driver.getCurrentUrl());  
-        assertEquals("User:" + underscoresToSpaces(name), _driver.findElement(By.id("firstHeading")).getText());     
+        assertEquals("User:" + name, _driver.findElement(By.id("firstHeading")).getText());     
     }
     
     @Test
@@ -132,11 +132,6 @@ public class UserPageTests
         _driver.findElement(By.id("wpTextbox1")).clear();
         _driver.findElement(By.id("wpTextbox1")).sendKeys("x");
         _driver.findElement(By.id("wpSave")).click();
-    }
-    
-    private static String underscoresToSpaces(String input)
-    {
-        return input.replace('_', ' ');
     }
     
     private boolean isElementPresent(By by) 
