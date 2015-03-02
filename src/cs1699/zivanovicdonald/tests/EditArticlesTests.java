@@ -25,45 +25,78 @@ public class EditArticlesTests
         baseUrl = "http://www.wikipedia.org/";
 
     }//END setUp()
+    
+    @After
+    public void tearDown() throws Exception 
+    {
+        driver.quit();
+
+    }//END tearDown()
 
     @Test
+    //Scenario: Semi-Protected Page
     public void semiProtectedPageTest() throws Exception 
     {
+        //Given an existing Semi-Protected page
+        //And a user that is not logged in
         driver.get(baseUrl + "/");
         driver.findElement(By.cssSelector("strong")).click();
         driver.findElement(By.id("searchInput")).click();
         driver.findElement(By.id("searchInput")).clear();
         driver.findElement(By.id("searchInput")).sendKeys("cat");
         driver.findElement(By.id("searchButton")).click();
+        
+        //When the user attempts to edit the page
+        //Then the user should not be able to click "edit"
+        assertFalse(isElementPresent(By.linkText("Edit")));
+        
         driver.findElement(By.linkText("View source")).click();
+        
+        //And the user should see a prompt concerning it being semi-protected in the View Source link
         assertEquals("This page is currently semi-protected so that only established registered users can edit it.", driver.findElement(By.cssSelector("span.mbox-text-span")).getText());
 
     }//END semiProtectedPageTest()
 
     @Test
+    //Scenario: Non-Protected Page
     public void nonProtectedPage() throws Exception 
     {
+        //Given an existing Non-Protected page
+        //And a user that is not logged in
         driver.get(baseUrl + "/");
         driver.findElement(By.cssSelector("strong")).click();
         driver.findElement(By.id("searchInput")).clear();
         driver.findElement(By.id("searchInput")).sendKeys("almond butter");
         driver.findElement(By.id("searchButton")).click();
+        
+        //When the user attempts to edit the page
         driver.findElement(By.linkText("Edit")).click();
+        
+        //Then the user should arrive at the "editing" page
+        assertEquals("Editing Almond butter", driver.findElement(By.id("firstHeading")).getText());
+        
+        //And the user should see a "Save page" button so that they may save their changes
         assertTrue(isElementPresent(By.id("wpSave")));
         assertEquals("Save page", driver.findElement(By.id("wpSave")).getAttribute("value"));
 
     }//END nonProtectedPage()
 
     @Test
+    //Scenario: Preview Change
     public void previewChangeTest() throws Exception 
     {
+        //Given an existing page
+        //And a user that is not logged in
         driver.get(baseUrl + "/");
         driver.findElement(By.cssSelector("strong")).click();
         driver.findElement(By.id("searchInput")).clear();
         driver.findElement(By.id("searchInput")).sendKeys("null pointer");
         driver.findElement(By.id("searchButton")).click();
+        
+        //When the user edits the page
         driver.findElement(By.linkText("Edit")).click();
 
+        //Then the user should be able to click "Show Preview" in order to preview their change
         assertTrue(isElementPresent(By.id("wpPreview")));
 
         driver.findElement(By.id("wpPreview")).click();
@@ -80,23 +113,31 @@ public class EditArticlesTests
 
         String newText = driver.findElement(By.id("wpTextbox1")).getText();
 
+        //And, after clicking, should be able to see the difference within the preview
         assertNotEquals(oldText, newText);
         assertThat(newText, containsString(butts));
 
     }//END previewChangeTest()
 
     @Test
+    //Scenario: Show Changes
     public void testShowChanges()
     {
+        //Given an existing page
+        //And a user that is not logged in
         driver.get(baseUrl + "/");
         driver.findElement(By.cssSelector("strong")).click();
         driver.findElement(By.id("searchInput")).clear();
         driver.findElement(By.id("searchInput")).sendKeys("null pointer");
         driver.findElement(By.id("searchButton")).click();
+        
+        //When the user edits the page
         driver.findElement(By.linkText("Edit")).click();
 
+        //Then the page should direct to its "Editing" page
         assertEquals("Editing Null pointer", driver.findElement(By.id("firstHeading")).getText());
 
+        //And the user should be able to click "Show Changes" in order to compare their changes
         assertTrue(isElementPresent(By.id("wpDiff")));
 
         String butts = "Null Pointers like big butts and they cannot lie.";
@@ -112,6 +153,7 @@ public class EditArticlesTests
         String oldText = driver.findElement(By.cssSelector("td.diff-deletedline > div")).getText();
         String newText = driver.findElement(By.cssSelector("td.diff-addedline > div")).getText();
 
+        //And, after clicking, should be able to see the differences within the comparison being shown
         assertNotEquals(oldText, newText);
         assertThat(oldText, not(containsString(butts)));
         assertThat(newText, containsString(butts));
@@ -119,27 +161,42 @@ public class EditArticlesTests
     }//END testShowChanges()
 
     @Test
+    //Scenario: View History
     public void testViewHistory()
     {
+        //Given an existing page
+        //And a user that is not logged in
         driver.get(baseUrl + "/");
         driver.findElement(By.cssSelector("strong")).click();
         driver.findElement(By.id("searchInput")).clear();
+        
+        //When the user navigates to the page
         driver.findElement(By.id("searchInput")).sendKeys("cats");
         driver.findElement(By.id("searchButton")).click();
         driver.findElement(By.linkText("View history")).click();
+        
+        //Then the user should arrive at the "Revision history" page
         assertEquals("Cat: Revision history", driver.findElement(By.id("firstHeading")).getText());
+        
+        //And have the ability to filter the history
         assertTrue(isElementPresent(By.id("mw-history-search")));
         driver.findElement(By.id("year")).clear();
         driver.findElement(By.id("year")).sendKeys("2014");
         driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
         driver.findElement(By.linkText("04:24, 24 October 2014")).click();
+        
+        //And the user should be able to see the edit history for that particular page
         assertThat(driver.findElement(By.cssSelector("b")).getText(), containsString("This is an old revision of this page"));
 
     }//END testViewHistory()
 
     @Test
+    //Scenario: Disambiguation Edit
     public void testDisambiguationEdit()
     {
+        //Given a generic item to search for
+        //And a disambiguation page pertaining to the item
+        //When the user arrives at the disambiguation page
         driver.get(baseUrl + "/");
         driver.findElement(By.cssSelector("strong")).click();
         driver.findElement(By.id("searchInput")).click();
@@ -147,21 +204,18 @@ public class EditArticlesTests
         driver.findElement(By.id("searchInput")).sendKeys("null");
         driver.findElement(By.id("searchButton")).click();
         driver.findElement(By.linkText("Edit")).click();
+        
+        //Then the user should arrive at the "editing" page
         assertEquals("Editing Null", driver.findElement(By.id("firstHeading")).getText());
+        
+        //And the page should explicitly say that the user is editing the disambiguation page
         assertThat(driver.findElement(By.cssSelector("td.mbox-text")).getText(), containsString("This is not an article; this is a disambiguation page, for directing readers quickly to intended articles."));
+        
+        //And the user should be able to edit that page
         assertTrue(isElementPresent(By.id("wpSave")));
 
     }//END testDisambiguationEdit()
 
-
-    @After
-    public void tearDown() throws Exception 
-    {
-        driver.quit();
-
-    }//END tearDown()
-
-    
     private boolean isElementPresent(By by) 
     {
         try 
