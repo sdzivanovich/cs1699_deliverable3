@@ -3,13 +3,13 @@ As a user (with or without an account)
 I want to search for and/or view articles
 So that I may increase my knowledge 
 
-Scenario: Searching for specific article
+Scenario: Searching for an existing article
 Given the user is on the main page
 And the name of an article
 When the user searches for the name of the article
 Then the user should be taken to the article's page
 
-Scenario: Searching non-specific article
+Scenario: Searching non-existent article
 Given the user is on the main page
 And a phrase that is not the name of an article
 When the user searches for the phrase
@@ -31,3 +31,4 @@ Given the user is on the main page
 And the name of a category
 When the user searches for the category
 Then the user should see the page for the category
+And the user should see links to pages in the category
