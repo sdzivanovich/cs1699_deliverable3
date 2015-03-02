@@ -1,35 +1,42 @@
 Feature:
 As a user (with or without an account)
-I want to interact with others and view helpful content
-so that I can have a much easier time navigating Wikipedia
+I want to interact with others by asking questions and viewing helpful content
+So that I can have a much easier time navigating Wikipedia
 
 Scenario: Community Help Desk
-Given a user
+Given a user at the front page
 When the user needs help regarding how to use the site
-Then the user should be able to post a question at the Help Desk
-And so they will click "Save page" to post it
+Then the user should be able to navigate to the Help Desk
+And be able to click to post a new question
+And be able to click "Save page" after typing their question to post it
 
 Scenario: Community Reference Desk
-Given a user
+Given a user at the front page
 When the user needs help regarding a particular subject matter
-Then the user should be able to post a question at the Reference Desk
-And so they will click "Save page" to post it
+Then the user should be able to navigate to the Reference Desk
+And then be able to click a category for their question
+And the user should be able to click to post a new question
+And be able to click "Save page" after typing their question to post it
 
 Scenario: Community Teahouse
-Given a user
+Given a user at the front page
 When the user needs help regarding how to edit pages
-Then the user should be able to post a question at the Teahouse
-And so they will click "Ask my question" to post it
+Then the user should be able to navigate to the Teahouse page
+And the user should be able to post a question at the Teahouse
+And, once they type their question, they can click "Ask my question" to post it
 
-Scenario: Community Village pump
-Given a user
+Scenario: Community Village Pump
+Given a user at the front page
 When the user wishes to discuss issues concerning Wikipedia
-Then the user should be able to select a particular category
+Then the user should be able to navigate to the Village pump page
+And the user should be able to select a particular category
 And the user should be able to create a new post
 And then the user should be able to click "Save page" to post it
 
-Scenario: Reference Look-up
-Given a user
+Scenario: Reference Look-Up
+Given a user at the front page
 When the user needs help regarding a particular subject matter
-Then the user should be able to search from the Reference Desk
-And thereby find the answer to their question without asking it
+Then the user should be able to navigate to the Reference Desk
+And the user should be able to search Wikipedia as a whole from the Reference Desk
+And the user should be able to search the reference desk archives specifically
+And searching the archives should return a "Search Results" page
