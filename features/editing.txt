@@ -1,7 +1,7 @@
 Feature:
-As a user (with or without an account)
+As a user (not logged in)
 I want to review and edit articles
-so that I can update the contents of an article with new or more-correct information
+so that I can update the contents of an article with new or more-correct information as well as preview such changes.
 
 Scenario: Semi-Protected page
 Given an existing Semi-Protected page 
@@ -19,7 +19,13 @@ Scenario: Preview Change
 Given an existing page
 And a user that is not logged in
 When the user edits the page
-Then the user should be able to "Show preview" in order to preview their changes
+Then the user should be able to "Show Preview" in order to preview their changes
+
+Scenario: Show Changes
+Given an existing page
+And a user that is not logged in
+When the user edits the page
+Then the user should be able to "Show Changes" in order to compare their changes with the content that was ocne there.
 
 Scenario: View History
 Given an existing page
@@ -30,5 +36,5 @@ Then the user should be able to see the edit history for that particular page
 Scenario: Disambiguation Edit
 Given a generic item to search for
 And a disambiguation page for the item
-When teh user navigates to the disambiguation page
+When the user navigates to the disambiguation page
 Then the user should be able to edit that page
