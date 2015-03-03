@@ -28,22 +28,6 @@ public class UserPageTests
     {
         _driver.quit();
     }
-    
-    @Test
-    // Scenario: Viewing user page history
-    public void viewingUserPageHistory()
-    {
-        // Given Mansfieldatron the name of a user
-        String name = "Mansfieldatron";
-        // When the user navigates to this user's user page
-        _driver.get("https://en.wikipedia.org/w/index.php?title=User:" + name);
-        // And clicks on the View history link
-        _driver.findElement(By.linkText("View history")).click();
-        // Then the user should see this user's user page revisions
-        String targetPage = "https://en.wikipedia.org/w/index.php?title=User:" + name + "&action=history";
-        assertEquals(targetPage, _driver.getCurrentUrl());
-        assertTrue(isElementPresent(By.id("pagehistory")));
-    }
 
     @Test
     // Scenario: Viewing user page
@@ -60,46 +44,6 @@ public class UserPageTests
         // Then the user should see the user page for that user 
         assertEquals("https://en.wikipedia.org/wiki/User:" + name, _driver.getCurrentUrl());  
         assertEquals("User:" + name, _driver.findElement(By.id("firstHeading")).getText());     
-    }
-    
-    @Test
-    // Scenario: Posting message to another user
-    public void postingMessageToAnotherUser()
-    {
-        // Given the user is logged in
-        _driver.get("https://en.wikipedia.org/w/index.php?title=Special:UserLogin");        
-        _driver.findElement(By.id("wpName1")).clear();
-        _driver.findElement(By.id("wpName1")).sendKeys("cs1699_test1");
-        _driver.findElement(By.id("wpPassword1")).clear();
-        _driver.findElement(By.id("wpPassword1")).sendKeys("cs1699_test1");
-        _driver.findElement(By.id("wpLoginAttempt")).click();
-        // And Mansfieldatron is the name of another user
-        String username = "Mansfieldatron";
-        // When a user navigates to the other user's page
-        _driver.get("https://en.wikipedia.org/wiki/User:" + username);
-        // And clicks on the Talk link
-        _driver.findElement(By.cssSelector("a[title=\"Discussion about the content page [Alt+Shift+t]\"]")).click();
-        // And clicks on the Edit link
-        _driver.findElement(By.linkText("Edit")).click();
-        // Then the user should be able to modify the talk page
-        assertEquals("https://en.wikipedia.org/w/index.php?title=User_talk:Mansfieldatron&action=edit", _driver.getCurrentUrl());        
-        assertTrue(isElementPresent(By.id("wpTextbox1")));
-        _driver.findElement(By.id("wpSave")).isEnabled();
-    }
-
-    @Test
-    // Scenario: Viewing user contributions
-    public void viewingUserContributions()
-    {
-        // Given Mansfieldatron is the name of another user
-        String username = "Mansfieldatron";
-        // And the user is on the other user's user page
-        _driver.get("https://en.wikipedia.org/wiki/User:" + username);
-        // When the user clicks on the User contributions link
-        _driver.findElement(By.linkText("User contributions")).click();
-        // Then the user should see the contributions made by the other user
-        assertEquals("https://en.wikipedia.org/wiki/Special:Contributions/" + username, _driver.getCurrentUrl());
-        assertTrue(isElementPresent(By.cssSelector("ul.mw-contributions-list")));      
     }
 
     @Test
@@ -134,7 +78,64 @@ public class UserPageTests
         _driver.findElement(By.id("wpTextbox1")).sendKeys("x");
         _driver.findElement(By.id("wpSave")).click();
     }
+
+    @Test
+    // Scenario: Viewing user contributions
+    public void viewingUserContributions()
+    {
+        // Given Mansfieldatron is the name of another user
+        String username = "Mansfieldatron";
+        // And the user is on the other user's user page
+        _driver.get("https://en.wikipedia.org/wiki/User:" + username);
+        // When the user clicks on the User contributions link
+        _driver.findElement(By.linkText("User contributions")).click();
+        // Then the user should see the contributions made by the other user
+        assertEquals("https://en.wikipedia.org/wiki/Special:Contributions/" + username, _driver.getCurrentUrl());
+        assertTrue(isElementPresent(By.cssSelector("ul.mw-contributions-list")));      
+    }
     
+    
+    @Test
+    // Scenario: Posting message to another user
+    public void postingMessageToAnotherUser()
+    {
+        // Given the user is logged in
+        _driver.get("https://en.wikipedia.org/w/index.php?title=Special:UserLogin");        
+        _driver.findElement(By.id("wpName1")).clear();
+        _driver.findElement(By.id("wpName1")).sendKeys("cs1699_test1");
+        _driver.findElement(By.id("wpPassword1")).clear();
+        _driver.findElement(By.id("wpPassword1")).sendKeys("cs1699_test1");
+        _driver.findElement(By.id("wpLoginAttempt")).click();
+        // And Mansfieldatron is the name of another user
+        String username = "Mansfieldatron";
+        // When a user navigates to the other user's page
+        _driver.get("https://en.wikipedia.org/wiki/User:" + username);
+        // And clicks on the Talk link
+        _driver.findElement(By.cssSelector("a[title=\"Discussion about the content page [Alt+Shift+t]\"]")).click();
+        // And clicks on the Edit link
+        _driver.findElement(By.linkText("Edit")).click();
+        // Then the user should be able to modify the talk page
+        assertEquals("https://en.wikipedia.org/w/index.php?title=User_talk:Mansfieldatron&action=edit", _driver.getCurrentUrl());        
+        assertTrue(isElementPresent(By.id("wpTextbox1")));
+        _driver.findElement(By.id("wpSave")).isEnabled();
+    }
+    
+    @Test
+    // Scenario: Viewing user page history
+    public void viewingUserPageHistory()
+    {
+        // Given Mansfieldatron the name of a user
+        String name = "Mansfieldatron";
+        // When the user navigates to this user's user page
+        _driver.get("https://en.wikipedia.org/w/index.php?title=User:" + name);
+        // And clicks on the View history link
+        _driver.findElement(By.linkText("View history")).click();
+        // Then the user should see this user's user page revisions
+        String targetPage = "https://en.wikipedia.org/w/index.php?title=User:" + name + "&action=history";
+        assertEquals(targetPage, _driver.getCurrentUrl());
+        assertTrue(isElementPresent(By.id("pagehistory")));
+    }
+
     private boolean isElementPresent(By by) 
     {
         try 
@@ -147,5 +148,4 @@ public class UserPageTests
             return false;
         }
     }
-
 }

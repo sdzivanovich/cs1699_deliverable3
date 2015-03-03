@@ -69,9 +69,46 @@ public class SearchingArticlesTests
         //And the user should see search results for the phrase        
         assertEquals("Search results", _driver.findElement(By.id("firstHeading")).getText());
     }
+    
+    @Test
+    //Scenario: Linking to other articles within article
+    public void linkingToOtherArticlesWithinArticle()
+    {
+        // Given the user is on the article page for "Cat"
+        _driver.get("https://en.wikipedia.org/wiki/Cat");
+        // And the article page contains links to other Wikipedia articles
+        List<WebElement> links = _driver.findElements(By.cssSelector("#mw-content-text > p > a"));
+        assertFalse(links.isEmpty());
+        // When the user clicks on a link within the article
+        WebElement link = links.get(0);
+        String name = link.getAttribute("title");
+        link.click();
+                
+        // Then the user should be taken to the page for the clicked-on article
+        assertEquals("https://en.wikipedia.org/wiki/" + name, _driver.getCurrentUrl());
+    }
+    
+    @Test
+    //Scenario: Searching for portal
+    public void searchingForPortal()
+    {
+     // Given the user is on the main page
+        _driver.get("https://en.wikipedia.org/wiki/Main_Page");
+        // And "Portal:Mathematics" is the name of a portal
+        String portal = "Portal:Mathematics";
+        // When the user searches for the portal
+        _driver.findElement(By.id("searchInput")).click();
+        _driver.findElement(By.id("searchInput")).clear();
+        _driver.findElement(By.id("searchInput")).sendKeys(portal);
+        _driver.findElement(By.id("searchButton")).click();;
+        // Then the user should be taken to the page for the clicked-on article
+        assertEquals("https://en.wikipedia.org/wiki/" + portal, _driver.getCurrentUrl());  
+        // And the portal page contains a selected article
+        assertTrue(isElementPresent(By.id("Selected_article")));
+    }
 
     @Test
-    //Scenario: Viewing categories of articles
+    //Scenario: Searching for category
     public void searchingForCategory()
     {
         // Given the user is on the main page
@@ -93,43 +130,6 @@ public class SearchingArticlesTests
         // (make sure linked page is actually in category)
         links.get(0).click();
         assertTrue(isElementPresent(By.cssSelector("a[title=\"" + category + "\"]")));
-    }
-
-    @Test
-    //Scenario: Viewing categories of articles
-    public void linkingToOtherArticlesWithinArticle()
-    {
-        // Given the user is on the article page for "Cat"
-        _driver.get("https://en.wikipedia.org/wiki/Cat");
-        // And the article page contains links to other Wikipedia articles
-        List<WebElement> links = _driver.findElements(By.cssSelector("#mw-content-text > p > a"));
-        assertFalse(links.isEmpty());
-        // When the user clicks on a link within the article
-        WebElement link = links.get(0);
-        String name = link.getAttribute("title");
-        link.click();
-                
-        // Then the user should be taken to the page for the clicked-on article
-        assertEquals("https://en.wikipedia.org/wiki/" + name, _driver.getCurrentUrl());
-    }
-    
-    @Test
-    //Scenario: Using a portal to find articles
-    public void usingPortalToFindArticles()
-    {
-     // Given the user is on the main page
-        _driver.get("https://en.wikipedia.org/wiki/Main_Page");
-        // And "Portal:Mathematics" is the name of a portal
-        String portal = "Portal:Mathematics";
-        // When the user searches for the portal
-        _driver.findElement(By.id("searchInput")).click();
-        _driver.findElement(By.id("searchInput")).clear();
-        _driver.findElement(By.id("searchInput")).sendKeys(portal);
-        _driver.findElement(By.id("searchButton")).click();;
-        // Then the user should be taken to the page for the clicked-on article
-        assertEquals("https://en.wikipedia.org/wiki/" + portal, _driver.getCurrentUrl());  
-        // And the portal page contains a selected article
-        assertTrue(isElementPresent(By.id("Selected_article")));
     }
 
     private boolean isElementPresent(By by) 

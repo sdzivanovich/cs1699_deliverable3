@@ -22,14 +22,14 @@ And the article page contains links to other Wikipedia articles
 When the user clicks on a link within the article
 Then the user should be taken to the page for the clicked-on article
 
-Scenario: Using a portal to find articles
+Scenario: Searching for portal
 Given the user is on the main page
 And Portal:Mathematics is the name of a portal
 When the user searches for the portal
 Then the portal for the page is displayed
 And the portal page contains a selected article
 
-Scenario: Viewing categories of articles
+Scenario: Searching for category
 Given the user is on the main page
 And Category:Religion is the name of a category
 When the user searches for the category
