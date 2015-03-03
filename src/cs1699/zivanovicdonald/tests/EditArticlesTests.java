@@ -40,13 +40,13 @@ public class EditArticlesTests
     //Scenario: Semi-Protected Page
     public void testSemiProtectedPage() 
     {
-        // Given the user is not logged in
-        // And Cat is the name of an article
+        //Given the user is not logged in
+        //And Cat is the name of an article
         String articleName = "Cat";
-        // And the user is on the Cat article page        
+        //And the user is on the Cat article page        
         driver.get("https://en.wikipedia.org/wiki/" + articleName);
         
-        // And the article is a Semi-Protected article
+        //And the article is a Semi-Protected article
         assertTrue(isElementPresent(By.cssSelector("img[alt=\"Page semi-protected\"]")));
         
         //When the user attempts to edit the page
@@ -63,12 +63,12 @@ public class EditArticlesTests
     //Scenario: Non-Protected Page
     public void testNonProtectedPage() 
     {
-        // Given the user is not logged in
-        // And Almond butter is the name of an article
+        //Given the user is not logged in
+        //And Almond butter is the name of an article
         String articleName = "Almond butter";
-        // And the user is on the article's page
+        //And the user is on the article's page
         driver.get("https://en.wikipedia.org/wiki/" + articleName);
-        // And the article is a Non-Protected article
+        //And the article is a Non-Protected article
         assertTrue(isElementPresent(By.linkText("Edit")));
 
         //When the user attempts to edit the page
@@ -87,13 +87,13 @@ public class EditArticlesTests
     //Scenario: Preview Change
     public void testPreviewChange() 
     {
-        // Given the user is not logged in
-        // And Null pointer is the name of an article
+        //Given the user is not logged in
+        //And Null pointer is the name of an article
         String articleName = "Null pointer";
-        // And the user is on the article's page        
+        //And the user is on the article's page        
         driver.get("https://en.wikipedia.org/wiki/" + articleName);
 
-        // When the user clicks the Edit link
+        //When the user clicks the Edit link
         driver.findElement(By.linkText("Edit")).click();
 
         //Then the user should be able to click "Show Preview" in order to preview their change
@@ -123,13 +123,13 @@ public class EditArticlesTests
     //Scenario: Show Changes
     public void testShowChanges()
     {
-        // Given the user is not logged in
-        // And Null pointer is the name of an article
+        //Given the user is not logged in
+        //And Null pointer is the name of an article
         String articleName = "Null pointer";
-        // And the user is on the article's page        
+        //And the user is on the article's page        
         driver.get("https://en.wikipedia.org/wiki/" + articleName);
 
-        // When the user clicks on the Edit link
+        //When the user clicks on the Edit link
         driver.findElement(By.linkText("Edit")).click();
 
         //Then the page should direct to its "Editing" page
@@ -151,7 +151,7 @@ public class EditArticlesTests
         String oldText = driver.findElement(By.cssSelector("td.diff-deletedline > div")).getText();
         String newText = driver.findElement(By.cssSelector("td.diff-addedline > div")).getText();
 
-        // And, after clicking, should be able to see the differences within the comparison being shown
+        //And, after clicking, should be able to see the differences within the comparison being shown
         assertNotEquals(oldText, newText);
         assertThat(oldText, not(containsString(butts)));
         assertThat(newText, containsString(butts));
@@ -162,13 +162,13 @@ public class EditArticlesTests
     //Scenario: View History
     public void testViewHistory()
     {
-        // Given the user is not logged in
-        // And Cat is the name of an article
+        //Given the user is not logged in
+        //And Cat is the name of an article
         String articleName = "Cat";
-        // And the user is on the Cat article page        
+        //And the user is on the Cat article page        
         driver.get("https://en.wikipedia.org/wiki/" + articleName);
         
-        // When the user clicks on the View history link
+        //When the user clicks on the View history link
         driver.findElement(By.linkText("View history")).click();
 
         //Then the user should arrive at the "Revision history" page
@@ -190,11 +190,11 @@ public class EditArticlesTests
     //Scenario: Disambiguation Edit
     public void testDisambiguationEdit()
     {
-        // Given NUL is the name of an disambiguation page
+        //Given NUL is the name of an disambiguation page
         String name = "NUL";        
-        // And the user is on this disambiguation page
+        //And the user is on this disambiguation page
         driver.get("https://en.wikipedia.org/wiki/" + name);    
-        // When the user clicks the Edit link
+        //When the user clicks the Edit link
         driver.findElement(By.linkText("Edit")).click();
         //Then the user should arrive at the "editing" page
         assertEquals("Editing " + name, driver.findElement(By.id("firstHeading")).getText());

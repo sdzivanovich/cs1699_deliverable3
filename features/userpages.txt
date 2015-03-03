@@ -35,4 +35,3 @@ Given Mansfieldatron is the name of another user
 When the user navigates to the other user's user page
 And clicks on the View history link
 Then the user should see the other user's user page revisions
-

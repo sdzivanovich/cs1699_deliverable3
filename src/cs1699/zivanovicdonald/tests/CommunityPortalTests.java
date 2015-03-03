@@ -27,7 +27,7 @@ public class CommunityPortalTests
     {
         driver = new FirefoxDriver();
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        baseUrl = "http://www.wikipedia.org/";
+        baseUrl = "https://en.wikipedia.org/wiki/Wikipedia:Community_portal";
 
     }//END setUp()
 
@@ -42,23 +42,20 @@ public class CommunityPortalTests
     //Scenario: Community Help Desk
     public void testHelpDesk()
     {
-        //Given a user
-        driver.get(baseUrl + "/");
-        driver.findElement(By.cssSelector("strong")).click();
-        driver.findElement(By.cssSelector("a[title=\"About the project, what you can do, where to find things\"]")).click();
-
-        //When the user needs help regarding how to use the site
+        //Given the user is on the Community Portal page
+        driver.get(baseUrl);
+       
+        // When the user clicks on the Help desk link
         driver.findElement(By.linkText("Help desk")).click();
-        driver.findElement(By.cssSelector("div.center")).click();
 
-        //Then the user should be able to navigate to the Help Desk
+        // Then the user should taken to the Help Desk page
         assertEquals("Wikipedia:Help desk", driver.findElement(By.id("firstHeading")).getText());
 
         //And be able to click to post a new question
         assertEquals("Click here to ask a new question about how to use or edit Wikipedia »", driver.findElement(By.cssSelector("span > b")).getText());
         driver.findElement(By.cssSelector("span > b")).click();
 
-        //And then be able to click "Save page" after typing their question to post it
+        //And be able to click "Save page" after typing their question to post it
         assertEquals("Editing Wikipedia:Help desk (new section)", driver.findElement(By.id("firstHeading")).getText());
         assertTrue(isElementPresent(By.id("wpSave")));
         assertEquals("", driver.findElement(By.id("wpSave")).getText());
@@ -69,16 +66,13 @@ public class CommunityPortalTests
     //Scenario: Community Reference Desk
     public void testReferenceDesk() 
     {
-        //Given a user at the front page
-        driver.get(baseUrl + "/");
-        driver.findElement(By.cssSelector("strong")).click();
-        driver.findElement(By.id("searchInput")).click();
-        driver.findElement(By.cssSelector("a[title=\"About the project, what you can do, where to find things\"]")).click();
-
-        //When the user needs help regarding a particular subject matter
+        //Given the user is on the Community Portal page
+        driver.get(baseUrl);
+        
+        //When the user clicks on the Reference desk link
         driver.findElement(By.linkText("Reference desk")).click();
 
-        //Then the user should be able to navigate to the Reference Desk
+        //Then the user should be taken to the Reference Desk page
         assertEquals("Wikipedia:Reference desk", driver.findElement(By.id("firstHeading")).getText());
 
         //And then be able to click a category for their question
@@ -89,25 +83,22 @@ public class CommunityPortalTests
         assertTrue(isElementPresent(By.name("create")));
         driver.findElement(By.name("create")).click();
 
-        //And be able to click "Save page" after typing their qeustion to post it
+        //And be able to click "Save page" after typing their question to post it
         assertTrue(isElementPresent(By.id("wpSave")));
 
     }//END testReferenceDesk()
 
     @Test
-    //Scenario: Reference Look-Up
+    //Scenario: Reference Desk Look-Up
     public void testReferenceDeskLookUp()
     {
-        //Given a user at the front page
-        driver.get(baseUrl + "/");
+        //Given the user is on the Community Portal page
+        driver.get(baseUrl);
 
-        //When the user needs help regarding a particular subject matter
-        driver.findElement(By.cssSelector("strong")).click();
-        driver.findElement(By.cssSelector("a[title=\"About the project, what you can do, where to find things\"]")).click();
-
-        //Then the user should be able to navigate to the Reference Desk
-        assertTrue(isElementPresent(By.linkText("Reference desk")));
+        //When the user clicks on the Reference desk link
         driver.findElement(By.linkText("Reference desk")).click();
+        
+        //Then the user should be taken to the Reference Desk page
         assertEquals("Wikipedia:Reference desk", driver.findElement(By.id("firstHeading")).getText());
         driver.findElement(By.id("bodySearchInputMP")).click();
 
@@ -133,14 +124,12 @@ public class CommunityPortalTests
     //Scenario: Community Teahouse
     public void testTeaHouse() 
     {
-        //Given a user at the front page
-        driver.get(baseUrl + "/");
-        driver.findElement(By.cssSelector("strong")).click();
-        driver.findElement(By.cssSelector("a[title=\"About the project, what you can do, where to find things\"]")).click();
-        //When the user needs help regarding how to edit pages
+        //Given the user is on the Community Portal page
+        driver.get(baseUrl);
+        //When the user clicks the Peer editing help link
         driver.findElement(By.linkText("Peer editing help")).click();
 
-        //Then the user should be able to navigate to the Teahouse page
+        //Then the user should be taken to the Teahouse page
         assertEquals("Wikipedia:Teahouse/Questions", driver.findElement(By.id("firstHeading")).getText());
 
         //And the user should be able to post a question at the Teahouse
@@ -160,17 +149,15 @@ public class CommunityPortalTests
     //Scenario: Community Village Pump
     public void testVillagePump() 
     {
-        //Given a user at the front page
-        driver.get(baseUrl + "/");
-        driver.findElement(By.cssSelector("strong")).click();
+        //Given the user is on the Community Portal page
+        driver.get(baseUrl);
 
-        //When the user wishes to discuss issues concerning Wikipedia
-        driver.findElement(By.cssSelector("a[title=\"About the project, what you can do, where to find things\"]")).click();
-
-        //Then the user should be able to navigate to the Village pump page
-        assertTrue(isElementPresent(By.linkText("Village pump")));
+        // When the user clicks the Village pump link
         driver.findElement(By.linkText("Village pump")).click();
 
+        //Then the user should be taken to the Village pump page
+        assertEquals("Wikipedia:Village pump", driver.findElement(By.id("firstHeading")).getText());
+        
         //And the user should be able to select a particular category
         assertTrue(isElementPresent(By.linkText("Miscellaneous")));
         driver.findElement(By.linkText("Miscellaneous")).click();

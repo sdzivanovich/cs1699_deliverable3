@@ -4,39 +4,39 @@ I want to interact with others by asking questions and viewing helpful content
 So that I can have a much easier time navigating Wikipedia
 
 Scenario: Community Help Desk
-Given a user at the front page
-When the user needs help regarding how to use the site
-Then the user should be able to navigate to the Help Desk
+Given the user is on the Community Portal page
+When the user clicks on the Help desk link
+Then the user should taken to the Help Desk page
 And be able to click to post a new question
 And be able to click "Save page" after typing their question to post it
 
 Scenario: Community Reference Desk
-Given a user at the front page
-When the user needs help regarding a particular subject matter
-Then the user should be able to navigate to the Reference Desk
+Given the user is on the Community Portal page
+When the user clicks on the Reference desk link
+Then the user should be taken to the Reference Desk page
 And then be able to click a category for their question
 And the user should be able to click to post a new question
 And be able to click "Save page" after typing their question to post it
 
+Scenario: Reference Desk Look-Up
+Given the user is on the Community Portal page
+When the user clicks on the Reference desk link
+Then the user should be taken to the Reference Desk page
+And the user should be able to search Wikipedia as a whole from the Reference Desk
+And the user should be able to search the reference desk archives specifically
+And searching the archives should return a "Search Results" page
+
 Scenario: Community Teahouse
-Given a user at the front page
-When the user needs help regarding how to edit pages
-Then the user should be able to navigate to the Teahouse page
+Given the user is on the Community Portal page
+When the user clicks the Peer editing help link
+Then the user should be taken to the Teahouse page
 And the user should be able to post a question at the Teahouse
 And, once they type their question, they can click "Ask my question" to post it
 
 Scenario: Community Village Pump
-Given a user at the front page
-When the user wishes to discuss issues concerning Wikipedia
-Then the user should be able to navigate to the Village pump page
+Given the user is on the Community Portal page
+When the user clicks the Village pump link
+Then the user should be taken to the Village pump page
 And the user should be able to select a particular category
 And the user should be able to create a new post
 And then the user should be able to click "Save page" to post it
-
-Scenario: Reference Look-Up
-Given a user at the front page
-When the user needs help regarding a particular subject matter
-Then the user should be able to navigate to the Reference Desk
-And the user should be able to search Wikipedia as a whole from the Reference Desk
-And the user should be able to search the reference desk archives specifically
-And searching the archives should return a "Search Results" page
