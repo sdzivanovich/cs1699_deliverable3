@@ -20,14 +20,12 @@ public class EditArticlesTests
 {
 
     private WebDriver driver;
-    private String baseUrl;
 
     @Before
     public void setUp() 
     {
         driver = new FirefoxDriver();
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        baseUrl = "http://www.wikipedia.org/";
 
     }//END setUp()
 
@@ -42,22 +40,21 @@ public class EditArticlesTests
     //Scenario: Semi-Protected Page
     public void testSemiProtectedPage() 
     {
-        //Given an existing Semi-Protected page
-        //And a user that is not logged in
-        driver.get(baseUrl + "/");
-        driver.findElement(By.cssSelector("strong")).click();
-        driver.findElement(By.id("searchInput")).click();
-        driver.findElement(By.id("searchInput")).clear();
-        driver.findElement(By.id("searchInput")).sendKeys("cat");
-        driver.findElement(By.id("searchButton")).click();
-
+        // Given the user is not logged in
+        // And Cat is the name of an article
+        String articleName = "Cat";
+        // And the user is on the Cat article page        
+        driver.get("https://en.wikipedia.org/wiki/" + articleName);
+        
+        // And the article is a Semi-Protected article
+        assertTrue(isElementPresent(By.cssSelector("img[alt=\"Page semi-protected\"]")));
+        
         //When the user attempts to edit the page
         //Then the user should not be able to click "edit"
         assertFalse(isElementPresent(By.linkText("Edit")));
-
-        driver.findElement(By.linkText("View source")).click();
-
+       
         //And the user should see a prompt concerning it being semi-protected in the View Source link
+        driver.findElement(By.linkText("View source")).click();
         assertEquals("This page is currently semi-protected so that only established registered users can edit it.", driver.findElement(By.cssSelector("span.mbox-text-span")).getText());
 
     }//END semiProtectedPageTest()
@@ -66,13 +63,13 @@ public class EditArticlesTests
     //Scenario: Non-Protected Page
     public void testNonProtectedPage() 
     {
-        //Given an existing Non-Protected page
-        //And a user that is not logged in
-        driver.get(baseUrl + "/");
-        driver.findElement(By.cssSelector("strong")).click();
-        driver.findElement(By.id("searchInput")).clear();
-        driver.findElement(By.id("searchInput")).sendKeys("almond butter");
-        driver.findElement(By.id("searchButton")).click();
+        // Given the user is not logged in
+        // And Almond butter is the name of an article
+        String articleName = "Almond butter";
+        // And the user is on the article's page
+        driver.get("https://en.wikipedia.org/wiki/" + articleName);
+        // And the article is a Non-Protected article
+        assertTrue(isElementPresent(By.linkText("Edit")));
 
         //When the user attempts to edit the page
         driver.findElement(By.linkText("Edit")).click();
@@ -90,15 +87,13 @@ public class EditArticlesTests
     //Scenario: Preview Change
     public void testPreviewChange() 
     {
-        //Given an existing page
-        //And a user that is not logged in
-        driver.get(baseUrl + "/");
-        driver.findElement(By.cssSelector("strong")).click();
-        driver.findElement(By.id("searchInput")).clear();
-        driver.findElement(By.id("searchInput")).sendKeys("null pointer");
-        driver.findElement(By.id("searchButton")).click();
+        // Given the user is not logged in
+        // And Null pointer is the name of an article
+        String articleName = "Null pointer";
+        // And the user is on the article's page        
+        driver.get("https://en.wikipedia.org/wiki/" + articleName);
 
-        //When the user edits the page
+        // When the user clicks the Edit link
         driver.findElement(By.linkText("Edit")).click();
 
         //Then the user should be able to click "Show Preview" in order to preview their change
@@ -128,15 +123,13 @@ public class EditArticlesTests
     //Scenario: Show Changes
     public void testShowChanges()
     {
-        //Given an existing page
-        //And a user that is not logged in
-        driver.get(baseUrl + "/");
-        driver.findElement(By.cssSelector("strong")).click();
-        driver.findElement(By.id("searchInput")).clear();
-        driver.findElement(By.id("searchInput")).sendKeys("null pointer");
-        driver.findElement(By.id("searchButton")).click();
+        // Given the user is not logged in
+        // And Null pointer is the name of an article
+        String articleName = "Null pointer";
+        // And the user is on the article's page        
+        driver.get("https://en.wikipedia.org/wiki/" + articleName);
 
-        //When the user edits the page
+        // When the user clicks on the Edit link
         driver.findElement(By.linkText("Edit")).click();
 
         //Then the page should direct to its "Editing" page
@@ -158,7 +151,7 @@ public class EditArticlesTests
         String oldText = driver.findElement(By.cssSelector("td.diff-deletedline > div")).getText();
         String newText = driver.findElement(By.cssSelector("td.diff-addedline > div")).getText();
 
-        //And, after clicking, should be able to see the differences within the comparison being shown
+        // And, after clicking, should be able to see the differences within the comparison being shown
         assertNotEquals(oldText, newText);
         assertThat(oldText, not(containsString(butts)));
         assertThat(newText, containsString(butts));
@@ -169,15 +162,13 @@ public class EditArticlesTests
     //Scenario: View History
     public void testViewHistory()
     {
-        //Given an existing page
-        //And a user that is not logged in
-        driver.get(baseUrl + "/");
-        driver.findElement(By.cssSelector("strong")).click();
-        driver.findElement(By.id("searchInput")).clear();
-
-        //When the user navigates to the page
-        driver.findElement(By.id("searchInput")).sendKeys("cats");
-        driver.findElement(By.id("searchButton")).click();
+        // Given the user is not logged in
+        // And Cat is the name of an article
+        String articleName = "Cat";
+        // And the user is on the Cat article page        
+        driver.get("https://en.wikipedia.org/wiki/" + articleName);
+        
+        // When the user clicks on the View history link
         driver.findElement(By.linkText("View history")).click();
 
         //Then the user should arrive at the "Revision history" page
@@ -199,19 +190,14 @@ public class EditArticlesTests
     //Scenario: Disambiguation Edit
     public void testDisambiguationEdit()
     {
-        //Given a generic item to search for
-        //And a disambiguation page pertaining to the item
-        //When the user arrives at the disambiguation page
-        driver.get(baseUrl + "/");
-        driver.findElement(By.cssSelector("strong")).click();
-        driver.findElement(By.id("searchInput")).click();
-        driver.findElement(By.id("searchInput")).clear();
-        driver.findElement(By.id("searchInput")).sendKeys("null");
-        driver.findElement(By.id("searchButton")).click();
+        // Given NUL is the name of an disambiguation page
+        String name = "NUL";        
+        // And the user is on this disambiguation page
+        driver.get("https://en.wikipedia.org/wiki/" + name);    
+        // When the user clicks the Edit link
         driver.findElement(By.linkText("Edit")).click();
-
         //Then the user should arrive at the "editing" page
-        assertEquals("Editing Null", driver.findElement(By.id("firstHeading")).getText());
+        assertEquals("Editing " + name, driver.findElement(By.id("firstHeading")).getText());
 
         //And the page should explicitly say that the user is editing the disambiguation page
         assertThat(driver.findElement(By.cssSelector("td.mbox-text")).getText(), containsString("This is not an article; this is a disambiguation page, for directing readers quickly to intended articles."));
