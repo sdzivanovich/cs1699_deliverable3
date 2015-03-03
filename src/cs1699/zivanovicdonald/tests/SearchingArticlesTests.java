@@ -37,16 +37,17 @@ public class SearchingArticlesTests
     public void searchingForExistingArticle() 
     {       
         // Given the user is on the main page
-        // And the name of an article
         _driver.get("https://en.wikipedia.org/wiki/Main_Page");
+        // And "Cat" is the name of an article
+        String articleName = "Cat";
         // When the user searches for the name of the article
         _driver.findElement(By.id("searchInput")).click();
         _driver.findElement(By.id("searchInput")).clear();
-        _driver.findElement(By.id("searchInput")).sendKeys("cat");
+        _driver.findElement(By.id("searchInput")).sendKeys(articleName);
         _driver.findElement(By.id("searchButton")).click();
         // Then the user should be taken to the article's page
-        assertEquals("https://en.wikipedia.org/wiki/Cat", _driver.getCurrentUrl());
-        assertEquals("Cat", _driver.findElement(By.id("firstHeading")).getText());
+        assertEquals("https://en.wikipedia.org/wiki/" + articleName, _driver.getCurrentUrl());
+        assertEquals(articleName, _driver.findElement(By.id("firstHeading")).getText());
     }
 
     @Test
@@ -55,7 +56,7 @@ public class SearchingArticlesTests
     {
         // Given the user is on the main page
         _driver.get("https://en.wikipedia.org/wiki/Main_Page");
-        // And a phrase that is not the name of an article
+        // And "Rent a cat" is not the name of an article
         String target = "Rent a cat";
         // When the user searches for the phrase
         _driver.findElement(By.id("searchInput")).click();
@@ -75,7 +76,7 @@ public class SearchingArticlesTests
     {
         // Given the user is on the main page
         _driver.get("https://en.wikipedia.org/wiki/Main_Page");
-        // And the name of a category
+        // And "Category:Religion" is the name of a category
         String category = "Category:Religion";
         // When the user searches for the category
         _driver.findElement(By.id("searchInput")).click();
@@ -98,7 +99,7 @@ public class SearchingArticlesTests
     //Scenario: Viewing categories of articles
     public void linkingToOtherArticlesWithinArticle()
     {
-        // Given the user is on an article page
+        // Given the user is on the article page for "Cat"
         _driver.get("https://en.wikipedia.org/wiki/Cat");
         // And the article page contains links to other Wikipedia articles
         List<WebElement> links = _driver.findElements(By.cssSelector("#mw-content-text > p > a"));
@@ -118,7 +119,7 @@ public class SearchingArticlesTests
     {
      // Given the user is on the main page
         _driver.get("https://en.wikipedia.org/wiki/Main_Page");
-        // And the name of a portal
+        // And "Portal:Mathematics" is the name of a portal
         String portal = "Portal:Mathematics";
         // When the user searches for the portal
         _driver.findElement(By.id("searchInput")).click();

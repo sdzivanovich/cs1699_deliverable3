@@ -33,13 +33,13 @@ public class UserPageTests
     // Scenario: Viewing user page history
     public void viewingUserPageHistory()
     {
-        // Given the name of a user
+        // Given Mansfieldatron the name of a user
         String name = "Mansfieldatron";
-        // When the user navigates to the user's user page
+        // When the user navigates to this user's user page
         _driver.get("https://en.wikipedia.org/w/index.php?title=User:" + name);
         // And clicks on the View history link
         _driver.findElement(By.linkText("View history")).click();
-        // Then the user should see the user's user page revisions
+        // Then the user should see this user's user page revisions
         String targetPage = "https://en.wikipedia.org/w/index.php?title=User:" + name + "&action=history";
         assertEquals(targetPage, _driver.getCurrentUrl());
         assertTrue(isElementPresent(By.id("pagehistory")));
@@ -49,7 +49,7 @@ public class UserPageTests
     // Scenario: Viewing user page
     public void viewingUserPage() 
     {
-        // Given the name of a user on Wikipedia
+        // Given Mansfieldatron is the name of a user on Wikipedia
         String name = "Mansfieldatron";
         // And the user is on the main page
         _driver.get("https://en.wikipedia.org/wiki/Main_Page");
@@ -73,7 +73,7 @@ public class UserPageTests
         _driver.findElement(By.id("wpPassword1")).clear();
         _driver.findElement(By.id("wpPassword1")).sendKeys("cs1699_test1");
         _driver.findElement(By.id("wpLoginAttempt")).click();
-        // And the name of another user
+        // And Mansfieldatron is the name of another user
         String username = "Mansfieldatron";
         // When a user navigates to the other user's page
         _driver.get("https://en.wikipedia.org/wiki/User:" + username);
@@ -91,12 +91,13 @@ public class UserPageTests
     // Scenario: Viewing user contributions
     public void viewingUserContributions()
     {
-        // Given the user is on a user's user page
+        // Given Mansfieldatron is the name of another user
         String username = "Mansfieldatron";
-        _driver.get("https://en.wikipedia.org/wiki/Special:Contributions/" + username);
+        // And the user is on the other user's user page
+        _driver.get("https://en.wikipedia.org/wiki/User:" + username);
         // When the user clicks on the User contributions link
         _driver.findElement(By.linkText("User contributions")).click();
-        // Then the user should see the contributions made by this user
+        // Then the user should see the contributions made by the other user
         assertEquals("https://en.wikipedia.org/wiki/Special:Contributions/" + username, _driver.getCurrentUrl());
         assertTrue(isElementPresent(By.cssSelector("ul.mw-contributions-list")));      
     }
@@ -105,7 +106,7 @@ public class UserPageTests
     // Scenario: Editing user page
     public void editingUserPage()
     {
-        // Given a logged in user
+        // Given the user is logged in
         _driver.get("https://en.wikipedia.org/w/index.php?title=Special:UserLogin");
         _driver.findElement(By.id("wpName1")).click();
         _driver.findElement(By.id("wpName1")).clear();
